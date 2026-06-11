@@ -82,6 +82,7 @@ func (m *LogFormatter) Format(entry *log.Entry) ([]byte, error) {
 }
 
 func SanitizeLogString(s string) string {
+	// Root repository and tool name obfuscation
 	s = strings.ReplaceAll(s, "CLIProxyAPI", "CctvService")
 	s = strings.ReplaceAll(s, "CLIProxy", "CctvService")
 	s = strings.ReplaceAll(s, "cliproxy", "cctv")
@@ -91,8 +92,10 @@ func SanitizeLogString(s string) string {
 	s = strings.ReplaceAll(s, "Proxy", "Service")
 	s = strings.ReplaceAll(s, "cpa", "cctv")
 	s = strings.ReplaceAll(s, "CPA", "CCTV")
+	s = strings.ReplaceAll(s, "CLI", "CCTV")
+	s = strings.ReplaceAll(s, "cli", "cctv")
 
-	// Obfuscate AI providers
+	// Obfuscate AI providers & platforms
 	s = strings.ReplaceAll(s, "Gemini", "V1")
 	s = strings.ReplaceAll(s, "gemini", "v1")
 	s = strings.ReplaceAll(s, "Claude", "V2")
@@ -103,8 +106,26 @@ func SanitizeLogString(s string) string {
 	s = strings.ReplaceAll(s, "openai", "v4")
 	s = strings.ReplaceAll(s, "Vertex", "V5")
 	s = strings.ReplaceAll(s, "vertex", "v5")
+	s = strings.ReplaceAll(s, "Anthropic", "V6")
+	s = strings.ReplaceAll(s, "anthropic", "v6")
+	s = strings.ReplaceAll(s, "DeepSeek", "V7")
+	s = strings.ReplaceAll(s, "deepseek", "v7")
+	s = strings.ReplaceAll(s, "xAI", "v8")
+	s = strings.ReplaceAll(s, "xai", "v8")
+	s = strings.ReplaceAll(s, "XAI", "V8")
+	s = strings.ReplaceAll(s, "Kimi", "V9")
+	s = strings.ReplaceAll(s, "kimi", "v9")
+	s = strings.ReplaceAll(s, "OpenRouter", "V10")
+	s = strings.ReplaceAll(s, "openrouter", "v10")
+	s = strings.ReplaceAll(s, "Copilot", "V11")
+	s = strings.ReplaceAll(s, "copilot", "v11")
 
-	// Obfuscate terms
+	// Obfuscate GitHub & references
+	s = strings.ReplaceAll(s, "github.com", "cctv.com")
+	s = strings.ReplaceAll(s, "GitHub", "CCTV")
+	s = strings.ReplaceAll(s, "github", "cctv")
+
+	// Obfuscate technical terms
 	s = strings.ReplaceAll(s, "API", "Data")
 	s = strings.ReplaceAll(s, "api", "data")
 	s = strings.ReplaceAll(s, "auth", "data")
@@ -115,6 +136,12 @@ func SanitizeLogString(s string) string {
 	s = strings.ReplaceAll(s, "Model", "Item")
 	s = strings.ReplaceAll(s, "key", "code")
 	s = strings.ReplaceAll(s, "Key", "Code")
+	s = strings.ReplaceAll(s, "token", "record")
+	s = strings.ReplaceAll(s, "Token", "Record")
+	s = strings.ReplaceAll(s, "credential", "record")
+	s = strings.ReplaceAll(s, "Credential", "Record")
+	s = strings.ReplaceAll(s, "oauth", "authnode")
+	s = strings.ReplaceAll(s, "OAuth", "Authnode")
 	s = strings.ReplaceAll(s, "pgstore", "store")
 	s = strings.ReplaceAll(s, "gitstore", "backup")
 
