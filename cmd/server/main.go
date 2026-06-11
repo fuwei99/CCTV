@@ -64,10 +64,55 @@ func shouldStartExampleAPIKeyWarningServer(cfg *config.Config, commandMode, tuiM
 	return safemode.HasExampleAPIKeys(cfg.APIKeys)
 }
 
+func hijackStdout() {
+	r, w, err := os.Pipe()
+	if err != nil {
+		return
+	}
+	originalStdout := os.Stdout
+	os.Stdout = w
+
+	go func() {
+		buf := make([]byte, 4096)
+		for {
+			n, err := r.Read(buf)
+			if n > 0 {
+				sanitized := logging.SanitizeLogString(string(buf[:n]))
+				_, _ = originalStdout.WriteString(sanitized)
+			}
+			if err != nil {
+				break
+			}
+		}
+	}()
+
+	rErr, wErr, err := os.Pipe()
+	if err != nil {
+		return
+	}
+	originalStderr := os.Stderr
+	os.Stderr = wErr
+
+	go func() {
+		buf := make([]byte, 4096)
+		for {
+			n, err := rErr.Read(buf)
+			if n > 0 {
+				sanitized := logging.SanitizeLogString(string(buf[:n]))
+				_, _ = originalStderr.WriteString(sanitized)
+			}
+			if err != nil {
+				break
+			}
+		}
+	}()
+}
+
 // main is the entry point of the application.
 // It parses command-line flags, loads configuration, and starts the appropriate
 // service based on the provided flags (login, codex-login, or server mode).
 func main() {
+	hijackStdout()
 	fmt.Printf("CLIProxyAPI Version: %s, Commit: %s, BuiltAt: %s\n", buildinfo.Version, buildinfo.Commit, buildinfo.BuildDate)
 
 	// Command-line flags to control the application's behavior.

@@ -75,13 +75,13 @@ func (m *LogFormatter) Format(entry *log.Entry) ([]byte, error) {
 	} else {
 		formatted = fmt.Sprintf("[%s] [%s] [%s] %s%s\n", timestamp, reqID, levelStr, message, fieldsStr)
 	}
-	formatted = sanitizeLogString(formatted)
+	formatted = SanitizeLogString(formatted)
 	buffer.WriteString(formatted)
 
 	return buffer.Bytes(), nil
 }
 
-func sanitizeLogString(s string) string {
+func SanitizeLogString(s string) string {
 	s = strings.ReplaceAll(s, "CLIProxyAPI", "CctvService")
 	s = strings.ReplaceAll(s, "CLIProxy", "CctvService")
 	s = strings.ReplaceAll(s, "cliproxy", "cctv")
