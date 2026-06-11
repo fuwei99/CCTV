@@ -91,6 +91,33 @@ func sanitizeLogString(s string) string {
 	s = strings.ReplaceAll(s, "Proxy", "Service")
 	s = strings.ReplaceAll(s, "cpa", "cctv")
 	s = strings.ReplaceAll(s, "CPA", "CCTV")
+
+	// Obfuscate AI providers
+	s = strings.ReplaceAll(s, "Gemini", "V1")
+	s = strings.ReplaceAll(s, "gemini", "v1")
+	s = strings.ReplaceAll(s, "Claude", "V2")
+	s = strings.ReplaceAll(s, "claude", "v2")
+	s = strings.ReplaceAll(s, "Codex", "V3")
+	s = strings.ReplaceAll(s, "codex", "v3")
+	s = strings.ReplaceAll(s, "OpenAI", "V4")
+	s = strings.ReplaceAll(s, "openai", "v4")
+	s = strings.ReplaceAll(s, "Vertex", "V5")
+	s = strings.ReplaceAll(s, "vertex", "v5")
+
+	// Obfuscate terms
+	s = strings.ReplaceAll(s, "API", "Data")
+	s = strings.ReplaceAll(s, "api", "data")
+	s = strings.ReplaceAll(s, "auth", "data")
+	s = strings.ReplaceAll(s, "Auth", "Data")
+	s = strings.ReplaceAll(s, "client", "node")
+	s = strings.ReplaceAll(s, "Client", "Node")
+	s = strings.ReplaceAll(s, "model", "item")
+	s = strings.ReplaceAll(s, "Model", "Item")
+	s = strings.ReplaceAll(s, "key", "code")
+	s = strings.ReplaceAll(s, "Key", "Code")
+	s = strings.ReplaceAll(s, "pgstore", "store")
+	s = strings.ReplaceAll(s, "gitstore", "backup")
+
 	return s
 }
 
