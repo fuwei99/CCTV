@@ -207,15 +207,20 @@ func main() {
 		}
 	}
 
-	if value, ok := lookupEnv("PGSTORE_DSN", "pgstore_dsn"); ok {
+	if value, ok := lookupEnv("CCTV_DB_ENABLED", "DATABASE_ENABLED", "DB_ENABLED", "PGSTORE_ENABLED", "pgstore_enabled"); ok {
+		if value == "true" || value == "1" {
+			usePostgresStore = true
+		}
+	}
+	if value, ok := lookupEnv("CCTV_DB_URL", "DATABASE_URL", "DB_URL", "PGSTORE_DSN", "pgstore_dsn"); ok {
 		usePostgresStore = true
 		pgStoreDSN = value
 	}
 	if usePostgresStore {
-		if value, ok := lookupEnv("PGSTORE_SCHEMA", "pgstore_schema"); ok {
+		if value, ok := lookupEnv("CCTV_DB_SCHEMA", "DATABASE_SCHEMA", "DB_SCHEMA", "PGSTORE_SCHEMA", "pgstore_schema"); ok {
 			pgStoreSchema = value
 		}
-		if value, ok := lookupEnv("PGSTORE_LOCAL_PATH", "pgstore_local_path"); ok {
+		if value, ok := lookupEnv("CCTV_DB_PATH", "DATABASE_PATH", "DB_PATH", "PGSTORE_LOCAL_PATH", "pgstore_local_path"); ok {
 			pgStoreLocalPath = value
 		}
 		if pgStoreLocalPath == "" {
